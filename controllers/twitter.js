@@ -1,0 +1,17 @@
+var Twit = require('twit');
+
+var T = new Twit({
+  consumer_key: process.env.TWITTER_KEY,
+  consumer_secret: process.env.TWITTER_SECRET,
+  access_token: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
+
+var sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ];
+
+var stream = T.stream('statuses/filter', { locations: sanFrancisco })
+
+stream.on('tweet', function (tweet) {
+  console.log(tweet)
+})
+
