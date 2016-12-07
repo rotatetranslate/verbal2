@@ -5,7 +5,7 @@ var apiKey   = process.env.BV_KEY;
 var tokenUri = 'https://token.beyondverbal.com/token';
 var baseUri  = 'https://apiv3.beyondverbal.com/v3/recording/';
 
-function getToken(req, res, next){
+function getToken(req, res, next) {
   return request.post({
     url: tokenUri,
     form: {

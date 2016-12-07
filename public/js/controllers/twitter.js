@@ -4,11 +4,19 @@ angular.module('MyApp')
 TwitterCtrl.$inject = ['locationService','$http', '$scope', '$rootScope', '$location', '$window', '$auth', 'Account'];
 
 function TwitterCtrl(locationService, $http, $scope, $rootScope, $location, $window, $auth, Account) {
-  console.log(locationService.getCurrentLocation());
-  locationService.getCurrentLocation().then(function(pos) {
-
+  locationService.getCurrentLocation()
+  .then(function(pos) {
     $rootScope.currentUser.latLng = [pos.lat, pos.lng];
     console.log($rootScope.currentUser);
+    // make google maps geocode request to get latlng bounds from single latlng
+    // pass latlng bounds to twitter controller to filter stream by current location
+  }).catch(function(err) {
+    console.log('err', err);
+  })
+
+  locationService.getBounds()
+  .then(function(bounds) {
+    console.log(bounds);
   }).catch(function(err) {
     console.log('err', err);
   })

@@ -39,6 +39,14 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
         templateUrl: 'partials/twitter.html',
         controller: 'TwitterCtrl'
       })
+      .when('/verbal', {
+        templateUrl: 'partials/beyondverbal.html',
+        controller: 'VerbalCtrl'
+      })
+      .when('/map', {
+        templateUrl: 'partials/map.html',
+        controller: 'MapCtrl'
+      })
       .otherwise({
         templateUrl: 'partials/404.html'
       });

@@ -6,14 +6,25 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DigitalProfile</title>
-  <link rel="stylesheet" href="/css/vendor/bootstrap.css">
-  <link rel="stylesheet" href="/css/main.css">
-  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEAf9eRpbnMUh6ch7wr9KZhgMKLM01ODQ"></script>
+<!-- <link rel="stylesheet" href="/css/vendor/bootstrap.css"> -->
+
+   <!-- Material Design fonts -->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- Bootstrap Material Design -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css">
+
+  <!-- <link rel="stylesheet" href="/css/main.css"> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEAf9eRpbnMUh6ch7wr9KZhgMKLM01ODQ"></script>
 </head>
 <body ng-app="MyApp">
   <div ng-include src="'partials/header.html'"></div>
   <div ng-view></div>
-  <div ng-include src="'partials/footer.html'"></div>
+  <!-- <div ng-include src="'partials/footer.html'"></div> -->
 
   <script src="/js/lib/jquery.js"></script>
   <script src="/js/lib/bootstrap.js"></script>
@@ -30,6 +41,7 @@
   <script src="/js/controllers/reset.js"></script>
   <script src="/js/controllers/signup.js"></script>
   <script src="/js/controllers/twitter.js"></script>
+  <script src="/js/controllers/beyondverbal.js"></script>
   <script src="/js/controllers/map.js"></script>
   <script src="/js/services/account.js"></script>
   <script src="/js/services/contact.js"></script>

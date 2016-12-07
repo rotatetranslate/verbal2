@@ -7,11 +7,20 @@ var T = new Twit({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
+// lat, lng, lat2, lng2
 var sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ];
 
-var stream = T.stream('statuses/filter', { locations: sanFrancisco })
+// var stream = T.stream('statuses/filter', { locations: sanFrancisco })
 
-stream.on('tweet', function (tweet) {
-  console.log(tweet)
-})
+// stream.on('tweet', function (tweet) {
+//   console.log(tweet)
+// })
 
+function getLocationStream(req, res, next) {
+  console.log('REQ>BODY', req.body)
+  var location;
+  var stream = T.stream('statuses/filter', {locations: location})
+  return stream.on('tweet', function(tweet) {
+    console.log(tweet);
+  })
+}
