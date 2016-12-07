@@ -9,6 +9,7 @@
     "async": "^1.5.2",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.15.1",
+    "bootstrap-material-design": "^0.5.10",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.1",
     "dotenv": "^2.0.0",

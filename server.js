@@ -79,6 +79,8 @@ app.get('/auth/twitter/callback', userController.authTwitterCallback);
 app.post('/token', beyondVerbalController.getToken);
 app.post('/start', beyondVerbalController.startRequest);
 app.post('/upstream', beyondVerbalController.upstreamRequest);
+//twitter routes
+app.post('/locationstream', twitterController.getLocationStream);
 
 app.get('*', function(req, res) {
   res.redirect('/#' + req.originalUrl);

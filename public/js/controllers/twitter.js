@@ -14,11 +14,21 @@ function TwitterCtrl(locationService, $http, $scope, $rootScope, $location, $win
     console.log('err', err);
   })
 
-  locationService.getBounds()
-  .then(function(bounds) {
-    console.log(bounds);
-  }).catch(function(err) {
-    console.log('err', err);
-  })
+  $scope.locationStream = function() {
+    return locationService.getBounds()
+    .then(function(bounds) {
+      console.log(bounds);
+      return $http.post('/locationstream', {
+        bounds: bounds
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+    }).catch(function(err) {
+      console.log('err', err);
+    })
+  }
+
+  $scope.locationStream();
 
 }
