@@ -17,10 +17,15 @@ var sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ];
 // })
 
 function getLocationStream(req, res, next) {
-  console.log('REQ>BODY', req.body)
-  var location;
+  var location = req.body.bounds;
   var stream = T.stream('statuses/filter', {locations: location})
   return stream.on('tweet', function(tweet) {
     console.log(tweet);
+    // res.send(tweet);
   })
+}
+
+
+module.exports = {
+  getLocationStream
 }
