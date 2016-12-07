@@ -21,6 +21,7 @@ var User = require('./models/User');
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
 var twitterController = require('./controllers/twitter');
+var beyondVerbalController = require('./controllers/beyondverbal');
 
 var app = express();
 
@@ -74,6 +75,10 @@ app.post('/auth/google', userController.authGoogle);
 app.get('/auth/google/callback', userController.authGoogleCallback);
 app.post('/auth/twitter', userController.authTwitter);
 app.get('/auth/twitter/callback', userController.authTwitterCallback);
+// beyondverbal routes
+app.post('/token', beyondVerbalController.getToken);
+app.post('/start', beyondVerbalController.startRequest);
+app.post('/upstream', beyondVerbalController.upstreamRequest);
 
 app.get('*', function(req, res) {
   res.redirect('/#' + req.originalUrl);
