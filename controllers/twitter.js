@@ -9,12 +9,16 @@ var T = new Twit({
 
 // lat, lng, lat2, lng2
 var sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ];
+var losAngeles = ['-118.62', '33.75', '-117.92', '34.32'];
 
-// var stream = T.stream('statuses/filter', { locations: sanFrancisco })
+var stream = T.stream('statuses/filter', { locations: losAngeles })
 
-// stream.on('tweet', function (tweet) {
-//   console.log(tweet)
-// })
+stream.on('tweet', function (tweet) {
+  if (tweet.geo !== null) {
+    console.log(tweet)
+
+  }
+})
 
 function getLocationStream(req, res, next) {
   var location = req.body.bounds;

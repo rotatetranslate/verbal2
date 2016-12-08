@@ -30,6 +30,7 @@ function VerbalCtrl($http, $scope, $rootScope, $location, $window, $auth, Accoun
     })
       .then(function(response) {
         console.log('analysis:', response.data.result);
+        return response.data.result;
       })
   }
 
