@@ -44,7 +44,8 @@ function upstreamRequest(req, res, next) {
     url: `${baseUri+req.body.recordingId}`,
     headers: {'Authorization': `Bearer ${req.body.token}`},
     // body: req.body.wav
-    body: fs.createReadStream('/Users/adamberro/Downloads/trump (1).wav')
+    // https://www.youtube.com/watch?v=EPRoAVKa2U8
+    body: fs.createReadStream('/Users/adamberro/Downloads/hilary.wav')
   }, function(err, response, body) {
     if (err) {
       console.log('error:', err);

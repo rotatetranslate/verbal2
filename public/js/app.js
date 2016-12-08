@@ -2,6 +2,8 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
   .config(function($routeProvider, $locationProvider, $authProvider) {
     $locationProvider.html5Mode(true);
 
+    // $.material.init();
+
     $routeProvider
       .when('/', {
         templateUrl: 'partials/home.html'
