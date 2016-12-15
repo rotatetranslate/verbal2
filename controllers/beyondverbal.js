@@ -45,11 +45,13 @@ function upstreamRequest(req, res, next) {
     headers: {'Authorization': `Bearer ${req.body.token}`},
     // body: req.body.wav
     // https://www.youtube.com/watch?v=EPRoAVKa2U8
-    body: fs.createReadStream('/Users/adamberro/Downloads/hilary.wav')
+    body: fs.createReadStream('/Users/adamberro/Downloads/paula_converted.wav')
   }, function(err, response, body) {
     if (err) {
       console.log('error:', err);
     } else {
+      console.log('response ', response);
+      console.log('body ', body);
       res.send(JSON.parse(body));
     }
   })
