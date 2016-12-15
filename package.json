@@ -22,6 +22,8 @@
     "morgan": "^1.7.0",
     "nodemailer": "^2.3.0",
     "request": "^2.69.0",
+    "sentiment": "^2.1.0",
+    "socket.io": "^1.7.2",
     "twit": "^2.2.5"
   },
   "devDependencies": {},

@@ -52,7 +52,7 @@
       .then(function(pos) {
         return $q((resolve, reject) => {
           geocoder.geocode({location: pos}, function(results, status) {
-            console.log('results', results);
+            // console.log('results', results);
             var bounds = results[1].geometry.bounds;
             var boundArr = [
               bounds.b.b,
@@ -60,7 +60,7 @@
               bounds.b.f,
               bounds.f.f
             ];
-            console.log('BOUNDARR', boundArr);
+            // console.log('BOUNDARR', boundArr);
             resolve(boundArr.map(String));
           })
         })

@@ -7,87 +7,92 @@
   MapCtrl.$inject = ['locationService', '$http', '$scope', '$rootScope', '$location', '$window', '$auth', 'Account'];
 
   function MapCtrl(locationService, $http, $scope, $rootScope, $location, $window, $auth, Account) {
-    // hardcoded data to demo concept
-    $scope.tweets = [
-      {
-        name: 'RandyJayBurrell',
-        text: 'Man what a day on set 🙌 Feeling Great! Got to work opposite of Oscar winner JK Simmons on the… https://t.co/qUfglEhKBe',
-        geo: [ 34.0837999, -118.2737 ]
-      },
-      {
-        name: 'Proviscalling',
-        text: 'Join the Providence Health & Services team! See our latest #job opening here: https://t.co/X5sX1FLj8E #Torrance, CA #Hiring',
-        geo: [33.83, -118.33]
-      },
-      {
-        name: 'Jeremy_Pessoa',
-        text: 'Post-surgery meal with my little brother. @ West Hills Hospital... https://t.co/IVMcsFu9TP',
-        geo: [ 34.20301, -118.6286 ]
-      },
-      {
-        name: 'PreacherWalling',
-        text: 'Last house group meeting of the year for our Wednesday night student Bible study!… https://t.co/C94tdCOTps',
-        geo: [34.04629439, -118.71452126]
-      },
-      {
-        name: 'TrapTheGOD',
-        text: 'Orlando Salido got more losses than the total fights Lomachenko has had in his professional career and he still was able to beat him 😂😂',
-        geo: [ 34.0145277, -118.35329483 ]
-      },
-      {
-        name: 'AlphaRwirangira',
-        text: 'My brother from another mother never disappoints @TheRealTheBen #rohoyangye video lyrics out… https://t.co/GSSvDuKC1I',
-        geo: [ 34.0522, -118.243 ]
-      },
-      {
-        name: 'TopherAdam',
-        text: 'So sad this ride is leaving. @ The Twilight Zone Tower of Terror https://t.co/cmG9ggHMrp',
-        geo: [33.80703706, -117.9170742]
-      },
-      {
-        name: 'monireno',
-        text: 'Have a heart that never hardens, and a temper that never tires, and a touch that never hurts. - Charles Dickens https://t.co/iQOLyR3b8g',
-        geo: [ 37.69956479, -123.01184074 ]
-      },
-      {
-        name: 'kepamer',
-        text: 'Picture of Mt. Fuji reflected in Lake Kawaguchi, Japan https://t.co/K8DnP4Y9ci',
-        geo: [ 37.6991098, -123.01184174 ]
-      },
-      {
-        name: 'Ciscogiii',
-        text: '#sanfrancisco #sunrise #goldengatebridge #research #nosleep #4amwakeup #noregrets @ Golden Gate… https://t.co/7aUHioQkDj',
-        geo: [ 37.8183, -122.47846 ]
-      }
-    ]
 
+    $scope.tweets = [];
+    $scope.map;
+    $scope.bounds;
+    $scope.createMarkers = createMarkers;
+
+    // $scope.initMap = function() {
+    //   $scope.map = new google.maps.Map(document.getElementById('map'), {
+    //     center: {lat: 34.0312450, lng: -118.2665320},
+    //     zoom: 10
+    //   });
+
+    //   var infoWindow = new google.maps.InfoWindow({map: $scope.map});
+
+    //   locationService.getCurrentLocation()
+    //   .then(function(pos) {
+    //     infoWindow.setPosition(pos);
+    //     infoWindow.setContent('Location Found.');
+    //     $scope.map.setCenter(pos);
+    //     $scope.map.setZoom(11);
+
+    //     $scope.bounds = new google.maps.LatLngBounds();
+    //     $scope.bounds = $scope.map.getBounds();
+    //     console.log('bounds', $scope.bounds);
+    //   })
+    // }
     $scope.initMap = function() {
-      var map = new google.maps.Map(document.getElementById('map'), {
+      $scope.map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 34.0312450, lng: -118.2665320},
-        zoom: 10
+        zoom: 11
       });
+      var infoWindow = new google.maps.InfoWindow({map: $scope.map});
 
-      // var infoWindow = new google.maps.InfoWindow({map: map});
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
 
-      // locationService.getCurrentLocation()
-      // .then(function(pos) {
-      //   infoWindow.setPosition(pos);
-      //   infoWindow.setContent('Location Found.');
-      //   map.setCenter(pos);
-      //   map.setZoom(10);
-      // })
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          $scope.map.setCenter(pos);
 
-      $scope.createMarkers = function() {
+          $scope.bounds = new google.maps.LatLngBounds();
+          $scope.bounds = $scope.map.getBounds();
+          console.log('bounds', $scope.bounds);
+
+        }, function() {
+          handleLocationError(true, infoWindow, $scope.map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, $scope.map.getCenter());
+      }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+                            'Error: The Geolocation service failed.' :
+                            'Error: Your browser doesn\'t support geolocation.');
+    }
+
+    $scope.initMap();
+
+    // only 1% of tweets have geo location, so:
+    // get current user's location to set bounds of map
+    // set tweet.geo to random coord within bounds
+    function createMarkers() {
+      console.log('creating markers...');
       $scope.tweets.forEach(tweet => {
-
-        var contentString = '<h4><a href="http://twitter.com/'+ tweet.name + '">' + tweet.name + '</a></h4>' + '<p>' + tweet.text + '</p>';
+        tweet.geo = [
+          Math.random() * ($scope.bounds.f.b - $scope.bounds.f.f) + $scope.bounds.f.f,
+          Math.random() * ($scope.bounds.b.b - $scope.bounds.b.f) + $scope.bounds.b.f
+          ];
+        var contentString = '<h4><a href="http://twitter.com/'+ tweet.name + '/status/' + tweet.status_id +'" target="_blank">' + tweet.name + '</a></h4>' + '<p>' + tweet.text + '</p>' + '<p>Sentiment: ' + tweet.sentiment.score + '</p>';
         var infowindow = new google.maps.InfoWindow({
           content: contentString
         });
 
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(tweet.geo[0], tweet.geo[1]),
-          map: map
+          animation: google.maps.Animation.DROP,
+          map: $scope.map
         })
         marker.addListener('click', function() {
           infowindow.open(map, marker);
@@ -95,25 +100,50 @@
       })
     }
 
-    $scope.createMarkers();
-
-
-
-    }
-
-    $scope.initMap();
-
-
-    // $scope.addMarkers = function() {
+    // function addMarkers() {
+    //   console.log('adding markers...');
     //   $scope.tweets.forEach(tweet => {
     //     var marker = new google.maps.Marker({
     //       position: new google.maps.LatLng(tweet.geo[0], tweet.geo[1]),
-    //       map: map
+    //       map: $scope.map
     //     })
     //   })
     // }
 
     // $scope.addMarkers();
+
+    $scope.getTweets = function(keyword) {
+      console.log('getting tweets...');
+      return $http.post('/twittersearch', {
+        keyword: keyword
+      })
+      .then(function(response) {
+        console.log(response);
+        $scope.tweets = response.data;
+      })
+    }
+
+    $scope.text = 'Enter search term';
+    $scope.submit = function() {
+      return $scope.getTweets($scope.text)
+        .then(function() {
+          return $scope.createMarkers();
+        })
+        // .then(function() {
+        //   return $scope.addMarkers();
+        // })
+      }
+
+    $scope.sumSentiment = function() {
+      var sum = 0;
+      for (var i = 0; i < $scope.tweets; i++) {
+        sum += $scope.tweets[i].sentiment.score;
+      }
+      console.log(sum / $scope.tweets.length);
+      return sum / $scope.tweets.length;
+    }
+
+    $scope.sumSentiment()
 
   }
 
