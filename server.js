@@ -81,6 +81,7 @@ app.post('/start', beyondVerbalController.startRequest);
 app.post('/upstream', beyondVerbalController.upstreamRequest);
 //twitter routes
 app.post('/locationstream', twitterController.getLocationStream);
+app.post('/twittersearch', twitterController.search);
 
 app.get('*', function(req, res) {
   res.redirect('/#' + req.originalUrl);
@@ -94,8 +95,30 @@ if (app.get('env') === 'production') {
   });
 }
 
+// var server = require('http').createServer(app);
+// var io = require('socket.io')(server);
+// var onlineUsers = 0;
+
+// io.sockets.on('connection', function(socket) {
+//   onlineUsers++;
+
+//   io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });
+//   console.log(onlineUsers);
+
+//   socket.on('disconnect', function() {
+//     onlineUsers--;
+//     io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });
+//   });
+// });
+
 app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
 module.exports = app;
+
+
+
+
+
+
